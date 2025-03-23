@@ -36,7 +36,7 @@ async def get_the_contact_2(
     description="If you have permission this will return either all contact information for a given person (defined by id)",
 )
 async def get_the_contact(
-    id: str | None = None
+    id: str | None = None, auth = Header(None)
 ):
     if not check_auth(auth):
         raise HTTPException(status_code=401, detail="Unauthorized access - check the auth.")
