@@ -43,6 +43,24 @@ def find_contact(name: str, surname: str) -> list[dict]:
     connection.close()
     return contacts_dict
 
+def find_contact_by_id(id: UUID):
+    connection =connect_to_db()
+    cursor = connection.cursor()
+    cursor.execute("""
+    SELECT * FROM contacts WHERE id = %s;
+    """, (id,))
+    ukol = cursor.fetchone()
+    return ukol
+
+def all_contacts():
+    connection =connect_to_db()
+    cursor = connection.cursor()
+    cursor.execute("""
+    SELECT * FROM contacts;
+    """, (id,))
+    ukoly = cursor.fetchone()
+    return ukoly
+
 def delete_contact(id: UUID):
     connection =connect_to_db()
     cursor = connection.cursor()
