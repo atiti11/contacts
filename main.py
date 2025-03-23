@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends, Form, Header, HTTPException, Response
-from database import find_contact, delete_contact, create_contact
+from database import find_contact, delete_contact, create_contact, find_contact_by_id, all_contacts
 from auth import check_auth
 from uuid import UUID
 app = FastAPI()
@@ -10,11 +10,11 @@ async def root():
         "This is an app for storing contacts. Please do not add any real contacts."
     }
 
-@app.get("/contact",
+@app.get("/contact_2",
     summary="Get a certain contact",
     description="If you have permission this will return either all contact information for a given person (defined by name, surname)",
 )
-async def get_the_contact(
+async def get_the_contact_2(
     name :str, surname:str, auth = Header(None)
 ):
     if not check_auth(auth):
@@ -30,12 +30,27 @@ async def get_the_contact(
         raise HTTPException(status_code=500, detail="Unable to connect to database")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal server erro: {e}")
-    
+
+@app.get("/contact_2",
+    summary="Get a certain contact",
+    description="If you have permission this will return either all contact information for a given person (defined by name, surname)",
+)
+async def get_the_contact(
+    id: str | None = None
+):
+    if not check_auth(auth):
+        raise HTTPException(status_code=401, detail="Unauthorized access - check the auth.")
+    if id:
+        return find_contact_by_id(id)
+    else:
+        return all_contacts()
+
+
 @app.delete("/contact",
     summary="Delete a certain contact",
     description="If you have permission this will delete a contact idenfied by the given id.",
 )
-async def get_the_contact(
+async def delete_the_contact(
     id:str = Form(description="Contact surname"), auth = Header(None)
 ):
     if not check_auth(auth):
