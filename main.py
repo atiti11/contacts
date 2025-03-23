@@ -31,9 +31,9 @@ async def get_the_contact_2(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal server erro: {e}")
 
-@app.get("/contact_2",
+@app.get("/contact",
     summary="Get a certain contact",
-    description="If you have permission this will return either all contact information for a given person (defined by name, surname)",
+    description="If you have permission this will return either all contact information for a given person (defined by id)",
 )
 async def get_the_contact(
     id: str | None = None
