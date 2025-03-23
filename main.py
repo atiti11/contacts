@@ -15,7 +15,7 @@ async def root():
     description="If you have permission this will return either all contact information for a given person (defined by name, surname)",
 )
 async def get_the_contact(
-    name :str = Form( description="Contact name"), surname:str = Form( description="Contact surname"), auth = Header(None)
+    name :str, surname:str, auth = Header(None)
 ):
     if not check_auth(auth):
         raise HTTPException(status_code=401, detail="Unauthorized access - check the auth.")
