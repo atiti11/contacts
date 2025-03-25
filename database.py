@@ -57,8 +57,18 @@ def find_contact_by_id(id: UUID):
     """,
         (id,),
     )
-    ukol = cursor.fetchone()
-    return ukol
+    contact = cursor.fetchone()
+    contact_done = {
+        "id": contact[0],
+        "name": contact[1],
+        "surname": contact[2],
+        "phone": contact[3],
+        "mail": contact[4],
+        "address": contact[5],
+        "note": contact[6],
+        "created_at": contact[7],
+    }
+    return contact_done
 
 
 def all_contacts():
