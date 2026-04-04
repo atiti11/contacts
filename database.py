@@ -1,16 +1,20 @@
+import os
 import mysql.connector
 from mysql.connector import Error
 from uuid import UUID
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def connect_to_db():
     try:
         connection = mysql.connector.connect(
-            host="mysql-engeto.alwaysdata.net ",
-            database="engeto_contacts",
-            user="engeto",
-            password="]$4?Z6B^g_VNcm@",
+            host=os.getenv("DB_HOST"),
+            database=os.getenv("DB_NAME"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
         )
         if connection.is_connected():
             return connection

@@ -1,8 +1,12 @@
-authentication_strings = ["NSE5LN40ftVsWkTka7Xg"]
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 def check_auth(auth: str) -> bool:
     if auth is None:
         return False
-    if auth in authentication_strings:
-        return True
-    else:
-         return False
+    valid_token = os.getenv("AUTH_TOKEN")
+    if not valid_token:
+        return False
+    return auth == valid_token

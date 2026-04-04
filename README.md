@@ -1,29 +1,81 @@
----
-title: FastAPI
-description: A FastAPI server
-tags:
-  - fastapi
-  - hypercorn
-  - python
----
+# Contacts API
 
-# FastAPI Example
+A lightweight REST API for storing and managing personal contacts, built with **FastAPI** and backed by a **MySQL** database. The goal is to use this as a dummy API for learning REST API basis.
 
-This example starts up a [FastAPI](https://fastapi.tiangolo.com/) server.
+## Features
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/-NvLj4?referralCode=CRJ8FE)
-## ✨ Features
+- **Add contacts** — store name, surname, phone, email, address, and notes
+- **Look up contacts** — search by name & surname, or by ID
+- **Delete contacts** — remove a contact by ID
+- **Auth-protected** — all endpoints require a token passed via the `auth` header
+- **Auto-docs** — interactive Swagger UI available at `/docs`
 
-- FastAPI
-- [Hypercorn](https://hypercorn.readthedocs.io/)
-- Python 3
+## Tech Stack
 
-## 💁‍♀️ How to use
+| Layer | Technology |
+|---|---|
+| Framework | FastAPI |
+| Server | Hypercorn |
+| Database | MySQL |
+| Deployment | Railway / Vercel |
 
-- Clone locally and install packages with pip using `pip install -r requirements.txt`
-- Run locally using `hypercorn main:app --reload`
+## Getting Started
 
-## 📝 Notes
+### 1. Clone & install
 
-- To learn about how to use FastAPI with most of its features, you can visit the [FastAPI Documentation](https://fastapi.tiangolo.com/tutorial/)
-- To learn about Hypercorn and how to configure it, read their [Documentation](https://hypercorn.readthedocs.io/)
+```bash
+git clone <your-repo-url>
+cd contacts
+pip install -r requirements.txt
+```
+
+### 2. Configure environment
+
+Create a `.env` file in the project root:
+
+```
+AUTH_TOKEN=your_secret_token_here
+```
+
+> ⚠️ Never commit `.env` — it is already listed in `.gitignore`.
+
+### 3. Run locally
+
+```bash
+hypercorn main:app --reload
+```
+
+The API will be available at `http://localhost:8000`. Visit `http://localhost:8000/docs` for the interactive Swagger UI.
+
+## API Endpoints
+
+All requests require the header `auth: <your_token>`.
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/` | Health check |
+| `GET` | `/contact?id=<id>` | Get contact by ID (or all contacts if no ID given) |
+| `GET` | `/contact_2?name=<n>&surname=<s>` | Get contacts by name & surname |
+| `POST` | `/contact` | Create a new contact |
+| `DELETE` | `/contact` | Delete a contact by ID |
+
+### POST `/contact` — form fields
+
+| Field | Required | Description |
+|---|---|---|
+| `name` | ✅ | First name |
+| `surname` | ✅ | Last name |
+| `phone` | ❌ | Phone number |
+| `email` | ❌ | Email address |
+| `address` | ❌ | Physical address |
+| `note` | ❌ | Free-text note |
+
+## Deployment
+
+The project includes configuration for both **Railway** (`railway.json`) and **Vercel** (`vercel.json`).
+
+For Railway, set the `AUTH_TOKEN` environment variable in the Railway dashboard under your project's **Variables** tab.
+
+## License
+
+See [LICENSE.md](LICENSE.md).
