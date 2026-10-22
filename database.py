@@ -131,7 +131,7 @@ def create_contact(name, surname, phone, email, address, note):
     cursor = connection.cursor()
     cursor.execute(
         f"""
-    INSERT INTO contacts (name, surname, phone, mail, address, note)
+    INSERT INTO contacts (name, surname, phone, email, address, note)
     VALUES ('{name}', '{surname}', '{phone}', '{email}', '{address}', '{note}');
     """
     )
