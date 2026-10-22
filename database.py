@@ -126,12 +126,12 @@ def delete_contact(id: UUID):
     connection.close()
 
 
-def create_contact(name, surname, phone, mail, address, note):
+def create_contact(name, surname, phone, email, address, note):
     connection = connect_to_db()
     cursor = connection.cursor()
     cursor.execute(
         f"""
-    INSERT INTO contacts (name, surname, phone, mail, address, note)
+    INSERT INTO contacts (name, surname, phone, email, address, note)
     VALUES ('{name}', '{surname}', '{phone}', '{email}', '{address}', '{note}');
     """
     )
